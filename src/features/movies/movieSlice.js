@@ -43,7 +43,6 @@ export const movieSlice = createSlice({
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        watch the last gpt chat 
       });
   },
 });
