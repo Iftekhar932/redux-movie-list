@@ -1,0 +1,24 @@
+📂 src
+ ├── 📂 app
+ │   ├── store.js  // Redux store setup
+ │   ├── api.js    // Axios instance with interceptors
+ │
+ ├── 📂 features
+ │   ├── 📂 auth
+ │   │   ├── authSlice.js   // Handles authentication state
+ │   │   ├── authAPI.js     // API functions related to auth (login, logout, refresh)
+ │   │  
+ │   ├── 📂 products
+ │   │   ├── productSlice.js  // Manages product state
+ │   │   ├── productAPI.js    // API calls for fetching products
+ │  
+ ├── 📂 components
+ │   ├── Navbar.js
+ │   ├── LoginForm.js
+ │  
+ ├── 📂 pages
+ │   ├── Home.js
+ │   ├── Profile.js
+ │
+ ├── App.js
+ ├── index.js

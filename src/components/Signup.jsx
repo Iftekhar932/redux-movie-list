@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { signup, user } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { signup } from "../features/auth/authSlice";
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
-  const current_user = useSelector(user);
-  console.log(current_user);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));

@@ -1,34 +1,34 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { auth_api } from "./authApi";
+
+export const signup = createAsyncThunk(
+  "auth/signupUser",
+  async (userInfo, thunkAPI) => {
+    console.log("🚀 ~ authSlice ~ userInfo:", userInfo);
+
+    try {
+      const response = await auth_api.post("/signup", userInfo);
+      return response.data;
+    } catch (error) {
+      console.log("🚀 ~ signup ~ error:", error);
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: { email: "", password: "" },
+    user: {},
   },
-  reducers: {
-    signup: {
-      reducer: (state, action) => {
-        const { id, email, password } = action.payload;
-        state.user = { id, email, password };
-        console.log(state.user);
-      },
-      prepare: (userInfo) => {
-        return { payload: { id: nanoid(), ...userInfo } };
-      },
-    },
-    login: {
-      reducer: (state, action) => {
-        const { email, password } = action.payload;
-        state.user = { email, password };
-        console.log(state.user);
-      },
-      prepare: (userInfo) => {
-        return { payload: { id: nanoid(), ...userInfo } };
-      },
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(signup.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addCase(signup.pending, (state, action) => {});
   },
 });
 
-export const { signup, login } = authSlice.actions;
 export const user = (state) => state.auth.user;
 export default authSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, user } from "../features/auth/authSlice";
+import { user } from "../features/auth/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -10,7 +10,6 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    console.log(formData);
   };
 
   const handleSubmit = (e) => {
