@@ -14,6 +14,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signup(formData));
+    setFormData({ email: "", password: "" });
   };
 
   return (
