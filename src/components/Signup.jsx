@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { signup } from "../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { resInfo, signup, user } from "../features/auth/authSlice";
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
-
+  const resMsg = useSelector(resInfo);
+  const current_user = useSelector(user);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -14,11 +15,15 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signup(formData));
-    setFormData({ email: "", password: "" });
+    if (resMsg.status == 200) {
+      setFormData({ email: "", password: "" });
+    }
   };
-
   return (
     <div>
+      {current_user.email}
+      <h1>Signup Here</h1>
+      {<h4>{resMsg.msg}</h4>}
       <form onSubmit={handleSubmit}>
         <input
           type="email"

@@ -9,18 +9,19 @@ import {
   currentStatus,
   allMovies,
 } from "../features/movies/movieSlice";
+import { user } from "../features/auth/authSlice";
 
 function Movies() {
   const movies = useSelector(allMovies);
   const status = useSelector(currentStatus);
   const error = useSelector(currentError);
+  const currentUser = useSelector(user);
   const dispatch = useDispatch();
   const [movieName, setMovieName] = useState("");
-
   return (
     <>
+      {currentUser.email}
       <h1>Movies</h1>
-
       <button onClick={() => dispatch(fetchMovies())}>Fetch Movies</button>
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error: {error}</p>}

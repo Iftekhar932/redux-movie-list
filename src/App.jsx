@@ -3,9 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import Movies from "./components/Movies.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
+import Navbar from "./components/Navbar.jsx";
 function App() {
   return (
     <>
+      <Navbar />
       <div className="App">
         <Routes>
           <Route path="/" element={<Movies />} />

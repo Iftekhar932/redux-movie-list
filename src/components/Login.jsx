@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { user, login } from "../features/auth/authSlice";
+import { user, login, resInfo } from "../features/auth/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
   const current_user = useSelector(user);
+  const resMsg = useSelector(resInfo);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,11 +16,16 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(formData));
-    setFormData({ email: "", password: "" });
+    if (resMsg.status == 200) {
+      setFormData({ email: "", password: "" });
+    }
   };
 
+  // console.log("🚀 ~ Login ~ resMsg:", resMsg);
   return (
     <div>
+      <h1>Login Here</h1>
+      {<h4>{resMsg.msg}</h4>}
       {current_user.email && <h1>Welcome, {current_user.email}</h1>}
       <form onSubmit={handleSubmit}>
         <input
