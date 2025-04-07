@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,6 +10,7 @@ import {
   allMovies,
 } from "../features/movies/movieSlice";
 import { user } from "../features/auth/authSlice";
+import { product_api } from "../features/auth/productApi";
 
 function Movies() {
   const movies = useSelector(allMovies);
@@ -18,6 +19,25 @@ function Movies() {
   const currentUser = useSelector(user);
   const dispatch = useDispatch();
   const [movieName, setMovieName] = useState("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken"); // Retrieve the token
+    product_api
+      .get("/hello", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Send the token in the request
+        },
+      })
+      .then((response) => {
+        console.log("Response from /hello", response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "Error from /hello",
+          error.response?.data || error.message
+        );
+      });
+  }, []);
+
   return (
     <>
       {currentUser.email}

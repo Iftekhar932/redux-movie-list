@@ -1,11 +1,11 @@
 import axios from "axios";
-export const auth_api = axios.create({
-  baseURL: "http://localhost:5000/auth",
+
+export const product_api = axios.create({
+  baseURL: "http://localhost:5000/products",
   withCredentials: true,
 });
 
-// ! needs testing
-auth_api.interceptors.request.use((config) => {
+product_api.interceptors.request.use((config) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -13,6 +13,7 @@ auth_api.interceptors.request.use((config) => {
     } else {
       delete config.headers["Authorization"];
     }
+    console.log("✨ 🌟 line 9 authApi.js config:", config.headers);
     return config;
   } catch (error) {
     console.log("🚀 ~ error:", error);
@@ -20,7 +21,7 @@ auth_api.interceptors.request.use((config) => {
   }
 });
 
-auth_api.interceptors.response.use(
+product_api.interceptors.response.use(
   (response) => {
     console.log("✨ 🌟 line 25 authApi.js response:", response);
     return response;
@@ -35,7 +36,7 @@ auth_api.interceptors.response.use(
       originalReq._retry = true; // Mark the request as retried if refresh token request has already been made once
 
       try {
-        const refreshRes = await auth_api.post(
+        const refreshRes = await product_api.post(
           "/refreshJWT",
           {},
           { withCredentials: true }
@@ -46,7 +47,7 @@ auth_api.interceptors.response.use(
         const { accessToken } = refreshRes.data;
         localStorage.setItem("accessToken", accessToken);
         originalReq.headers["Authorization"] = `Bearer ${accessToken}`;
-        return auth_api(originalReq);
+        return product_api(originalReq);
       } catch (refreshError) {
         console.log("authApi.js ~ 🟥 refreshError:", refreshError);
         return Promise.reject(refreshError);
@@ -55,3 +56,4 @@ auth_api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+export default product_api;

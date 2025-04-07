@@ -7,7 +7,7 @@ export const signup = createAsyncThunk(
     try {
       const response = await auth_api.post("/signup", userInfo);
       console.log(response.data);
-
+      localStorage.setItem("accessToken", response.data.userInfo.accessToken);
       return response.data;
     } catch (error) {
       console.log("🚀 ~ signup ~ error:", error.response.data);
