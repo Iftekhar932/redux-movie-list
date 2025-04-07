@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { auth_api } from "./authApi";
+import { API_ENDPOINTS, auth_api } from "./authApi";
 
 export const signup = createAsyncThunk(
   "auth/signupUser",
   async (userInfo, thunkAPI) => {
     try {
-      const response = await auth_api.post("/signup", userInfo);
+      const response = await auth_api.post(API_ENDPOINTS.SIGNUP, userInfo);
       console.log(response.data);
       localStorage.setItem("accessToken", response.data.userInfo.accessToken);
       return response.data;
@@ -23,7 +23,7 @@ export const login = createAsyncThunk(
   "auth/loginUser",
   async (userInfo, thunkAPI) => {
     try {
-      const response = await auth_api.post("/login", userInfo);
+      const response = await auth_api.post(API_ENDPOINTS.LOGIN, userInfo);
       console.log("🚀 ~ response:", response);
       return response.data;
     } catch (error) {
