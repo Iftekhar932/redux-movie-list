@@ -27,9 +27,7 @@ function Movies() {
           Authorization: `Bearer ${accessToken}`, // Send the token in the request
         },
       })
-      .then((response) => {
-        console.log("Response from /hello", response.data);
-      })
+      .then((response) => response.data)
       .catch((error) => {
         console.error(
           "Error from /hello",

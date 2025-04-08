@@ -6,7 +6,6 @@ export const signup = createAsyncThunk(
   async (userInfo, thunkAPI) => {
     try {
       const response = await auth_api.post(API_ENDPOINTS.SIGNUP, userInfo);
-      console.log(response.data);
       localStorage.setItem("accessToken", response.data.userInfo.accessToken);
       return response.data;
     } catch (error) {
@@ -24,7 +23,7 @@ export const login = createAsyncThunk(
   async (userInfo, thunkAPI) => {
     try {
       const response = await auth_api.post(API_ENDPOINTS.LOGIN, userInfo);
-      console.log("🚀 ~ response:", response);
+      localStorage.setItem("accessToken", response.data.userInfo.accessToken);
       return response.data;
     } catch (error) {
       console.log(error.response.data);

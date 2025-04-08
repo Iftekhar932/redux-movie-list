@@ -28,7 +28,6 @@ auth_api.interceptors.request.use((config) => {
 
 auth_api.interceptors.response.use(
   (response) => {
-    console.log("✨ 🌟 line 25 authApi.js response:", response);
     return response;
   },
   async (error) => {
@@ -46,8 +45,6 @@ auth_api.interceptors.response.use(
           {},
           { withCredentials: true }
         );
-        console.log("✨ 🌟 refreshRes: line 43 authApi.js ", refreshRes);
-        console.log("✨ 🌟 originalReq: line 44 authApi.js ", originalReq);
 
         const { accessToken } = refreshRes.data;
         localStorage.setItem("accessToken", accessToken);

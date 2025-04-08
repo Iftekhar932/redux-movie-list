@@ -8,7 +8,6 @@ export const product_api = axios.create({
 
 product_api.interceptors.request.use((config) => {
   try {
-    console.log("✨ 🌟 line 10 authApi.js config:", config);
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
