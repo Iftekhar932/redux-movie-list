@@ -21,24 +21,25 @@ function Movies() {
   const [movieName, setMovieName] = useState("");
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken"); // Retrieve the token
-    product_api
-      .get("/hello", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Send the token in the request
-        },
-      })
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error(
-          "Error from /hello",
-          error.response?.data || error.message
-        );
-      });
+    if (accessToken)
+      product_api
+        .get("/hello", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Send the token in the request
+          },
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+          console.error(
+            "Error from /hello",
+            error.response?.data || error.message
+          );
+        });
   }, []);
 
   return (
     <>
-      {currentUser.email}
+      {currentUser?.email}
       <h1>Movies</h1>
       <button onClick={() => dispatch(fetchMovies())}>Fetch Movies</button>
       {status === "loading" && <p>Loading...</p>}
@@ -69,6 +70,9 @@ function Movies() {
       >
         Add Movie
       </button>
+      <h1 class="bg-red-500 text-2xl bg-red-500 font-bold underline">
+        Hello world!
+      </h1>
     </>
   );
 }

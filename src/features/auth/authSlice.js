@@ -35,6 +35,13 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = () => {
+  localStorage.removeItem("accessToken");
+  return {
+    type: "auth/logout",
+  };
+};
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -44,13 +51,25 @@ export const authSlice = createSlice({
     msg: null,
     resStatus: null,
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.isLoggedIn = false;
+      state.msg = null;
+      state.resStatus = null;
+    },
+    /* setUser: (state, action) => {
+      state.user = action.payload;
+      console.log(state.user);
+    }, */
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signup.fulfilled, (state, action) => {
         console.log("fulfilled", action.payload);
         state.msg = action.payload.message;
         state.user = action.payload.userInfo;
+        state.isLoggedIn = true;
         login(action.payload.userInfo);
       })
       .addCase(signup.pending, (state, action) => {
@@ -58,22 +77,25 @@ export const authSlice = createSlice({
         state.msg = "Pending...";
       })
       .addCase(signup.rejected, (state, action) => {
-        console.log("🚀 ~ signup ~ error:", action.payload);
+        console.error("🚀 ~ signup ~ error:", action.payload);
         state.msg = action.payload.msg;
         state.resStatus = action.payload.status;
+        state.isLoggedIn = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         console.log("fulfilled", action.payload);
         state.msg = action.payload.message;
+        state.isLoggedIn = true;
       })
       .addCase(login.pending, (state, action) => {
         console.log("Pending...");
         state.msg = "Pending...";
       })
       .addCase(login.rejected, (state, action) => {
-        console.log("🚀 ~ login ~ error:", action.payload);
+        console.error("🚀 ~ login ~ error:", action.payload);
         state.msg = action.payload.msg;
         state.resStatus = action.payload.status;
+        state.isLoggedIn = false;
       });
   },
 });

@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   REFRESH_TOKEN: "/refreshJWT",
   LOGIN: "/login",
   SIGNUP: "/signup",
+  LOGOUT: "/logout",
 };
 
 // ! needs testing
