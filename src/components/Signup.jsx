@@ -8,6 +8,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const resMsg = useSelector(resInfo);
   const current_user = useSelector(user);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));

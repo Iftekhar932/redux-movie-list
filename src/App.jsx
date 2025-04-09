@@ -5,12 +5,14 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./components/Home.jsx";
+
+import { useSelector } from "react-redux";
+
 function App() {
+  const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <>
-      {window.location.href[window.location.href.length - 1] == "/" ? null : (
-        <Navbar />
-      )}
+      <Navbar />
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />

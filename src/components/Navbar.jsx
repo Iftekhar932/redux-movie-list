@@ -5,8 +5,8 @@ import { logout } from "../features/auth/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => console.log(state.auth.isLoggedIn));
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
 
   return (
     <nav className="bg-gradient-to-r from-[#1a2a6c] to-cyan-500 text-white shadow-md">
@@ -51,26 +51,34 @@ const Navbar = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `hover:text-gray-300 ${isActive ? "border-b-2 border-white" : ""}`
-            }
-          >
-            Login
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className={({ isActive }) =>
-              `hover:text-gray-300 ${isActive ? "border-b-2 border-white" : ""}`
-            }
-          >
-            Signup
-          </NavLink>
+          {userLoggedIn == false && (
+            <>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `hover:text-gray-300 ${
+                    isActive ? "border-b-2 border-white" : ""
+                  }`
+                }
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/signup"
+                className={({ isActive }) =>
+                  `hover:text-gray-300 ${
+                    isActive ? "border-b-2 border-white" : ""
+                  }`
+                }
+              >
+                Signup
+              </NavLink>
+            </>
+          )}
         </div>
 
         {/* Logout Button */}
-        {auth?.isLoggedIn ? (
+        {userLoggedIn ? (
           <button
             onClick={() => dispatch(logout())}
             className="hidden md:block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-md transition duration-300"
@@ -81,7 +89,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Logout Button */}
-      {isMenuOpen && (
+
+      {userLoggedIn && (
         <div className="md:hidden px-4 py-2">
           <button
             onClick={() => dispatch(logout())}
